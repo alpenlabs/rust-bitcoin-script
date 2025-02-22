@@ -11,6 +11,8 @@ pub fn generate(syntax: Vec<(Syntax, Span)>) -> TokenStream {
         Ok(val) => {
             if val.to_lowercase().trim() == "true" {
                 skip_gen = true
+            } else {
+                println!("debug value {:?}", val.to_lowercase().trim());
             }
         },
         Err(_) => {},
