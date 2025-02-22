@@ -7,6 +7,7 @@ use bitcoin_script::{script, Script};
 
 #[test]
 fn test_generic() {
+    println!("nows ");
     let foo = vec![1, 2, 3, 4];
     let script = script! (
         OP_HASH160

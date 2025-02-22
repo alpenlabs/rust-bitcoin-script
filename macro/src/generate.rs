@@ -5,7 +5,20 @@ use quote::{quote, quote_spanned};
 
 pub fn generate(syntax: Vec<(Syntax, Span)>) -> TokenStream {
     let mut tokens = quote!(::bitcoin_script::Script::new(::bitcoin_script::function_name!()));
-
+    let key = "BITVM_SKIP_SCRIPT_GEN";
+    let mut skip_gen = false;
+    match std::env::var(key) {
+        Ok(val) => {
+            if val.to_lowercase().trim() == "true" {
+                skip_gen = true
+            }
+        },
+        Err(_) => {},
+    }
+    if skip_gen {
+        return tokens;
+    }
+    
     for (item, span) in syntax {
         let push = match item {
             Syntax::Opcode(opcode) => generate_opcode(opcode, span),
