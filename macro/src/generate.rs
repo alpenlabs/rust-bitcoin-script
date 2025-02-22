@@ -10,12 +10,13 @@ pub fn generate(syntax: Vec<(Syntax, Span)>) -> TokenStream {
     match std::env::var(key) {
         Ok(val) => {
             if val.to_lowercase().trim() == "true" {
+                println!("correct skip gen {:?}", val.to_lowercase().trim());
                 skip_gen = true
             } else {
-                println!("debug value {:?}", val.to_lowercase().trim());
+                println!("debug mismatch value {:?}", val.to_lowercase().trim());
             }
         },
-        Err(_) => {},
+        Err(e) => {println!("error value {:?}", e)},
     }
     if skip_gen {
         return tokens;
